@@ -15,7 +15,9 @@
 - Player names do not sync
 - Currently have to install mod manually by injecting startup method into Assembly-CSharp.dll
 ### Installation
-Currently, the mod has to be installed manually.
+#### Simple Installation
+Run the ZeroG installer found in the zip in the releases section. The server files are saved to a directory in the desktop.
+#### Manual Installation
 This can be done by injecting the Load method in the Init class in the ZeroG assembly into Assembly-CSharp.dll
 in the SplashScreen class's Awake method (it can also be injected into other classes that contain a method that starts at runtime).
 ### Help and support
