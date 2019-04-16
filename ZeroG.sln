@@ -14,6 +14,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGServer", "ZeroGServer\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGGuiServer", "ZeroGGuiServer\ZeroGGuiServer.csproj", "{5B4CC2FC-753A-42D4-ADAC-C2381470340F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroGInstaller", "ZeroGInstaller\ZeroGInstaller.csproj", "{476D88FD-ED1A-4D15-85EF-BA0187963BAC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7378DE93-8FA7-401F-9868-FC5F86797CB0} = {7378DE93-8FA7-401F-9868-FC5F86797CB0}
+		{BD1AC2C5-B88F-41F6-9C50-10329F3E8397} = {BD1AC2C5-B88F-41F6-9C50-10329F3E8397}
+		{868A25E8-9D1C-483A-83A3-9434C06C5814} = {868A25E8-9D1C-483A-83A3-9434C06C5814}
+		{5B4CC2FC-753A-42D4-ADAC-C2381470340F} = {5B4CC2FC-753A-42D4-ADAC-C2381470340F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +44,10 @@ Global
 		{5B4CC2FC-753A-42D4-ADAC-C2381470340F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B4CC2FC-753A-42D4-ADAC-C2381470340F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B4CC2FC-753A-42D4-ADAC-C2381470340F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{476D88FD-ED1A-4D15-85EF-BA0187963BAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{476D88FD-ED1A-4D15-85EF-BA0187963BAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{476D88FD-ED1A-4D15-85EF-BA0187963BAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{476D88FD-ED1A-4D15-85EF-BA0187963BAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
