@@ -24,11 +24,12 @@ namespace ZeroG.MultiplayerClient
         NetPacketProcessor netPackProc;
         ProcessPacket packetProcessor;
         AutoResetEvent resetEvent = new AutoResetEvent(false);
-        public void Start()
+        string playername;
+        public void Start(string serverip, int port, string username)
         {
             try
             {
-
+                playername = username;
                 packetProcessor = new ProcessPacket();
                 listener = new EventBasedNetListener();
                 client = new NetManager(listener);
@@ -48,10 +49,13 @@ namespace ZeroG.MultiplayerClient
                     string text = File.ReadAllText("config.ini");
                     string[] parts = text.Split(':');
                     client.Connect(parts[0], int.Parse(parts[1]), "ZeroG");
+                    WriteLog.Debug("Game client attempting to connect to " + parts[0] + ":" + parts[1]);
                 }
                 else
                 {
-                    client.Connect("127.0.0.1", 6001, "ZeroG");
+                    //client.Connect("127.0.0.1", 6001, "ZeroG");
+                    WriteLog.Debug("Game client attempting to connect to " + serverip + ":" + port.ToString());
+                    client.Connect(serverip, port, "ZeroG");
                 }
                 resetEvent.WaitOne(2000);
                 resetEvent.Reset();
@@ -84,7 +88,7 @@ namespace ZeroG.MultiplayerClient
             resetEvent.Set();
             WriteLog.Debug("Successfully connected to server, sending info: " + peer.EndPoint);
             ClientInfo packet = new ClientInfo();
-            packet.Generate(File.ReadAllText("username.txt"));
+            packet.Generate(playername);
             ZeroGPacket mainPacket = PacketGenerator.Generate("ClientInfo", packet);
             peer.Send(netPackProc.Write(mainPacket), DeliveryMethod.ReliableOrdered);
         }

@@ -11,6 +11,11 @@ using FrameworkZeroG.CustomUnitySerializable;
 
 namespace ZeroG.MultiplayerClient
 {
+    public struct ServerAndName
+    {
+        public static string ServerIp;
+        public static string UserName;
+    }
     public class Main
     {
         public static bool IsPatched = false;
@@ -20,13 +25,44 @@ namespace ZeroG.MultiplayerClient
         public List<string> opponentsNames = new List<string>();
         public List<GameObject> playerShips = new List<GameObject>();
         public static bool AllPlayersLoaded = false;
+        public static bool AwaitingServerAndName = false;
         GameClient gClient;
         string userName = File.ReadAllText("username.txt");
         // public static Client netClient;
         public void Start()
         {
-            Connect();
+            GetServerAndName();
+            //Connect();
             //gClient.
+        }
+        public void GetServerAndName()
+        {
+            if (File.Exists("serverlogin.tmp"))
+            {
+                File.Delete("serverlogin.tmp");
+            }
+            File.WriteAllText("serverlogin.tmp", DateTime.Now.Year + ":" + DateTime.Now.Month + ":" + DateTime.Now.Day + ":" + DateTime.Now.Hour + ":" + DateTime.Now.Minute);
+            AwaitingServerAndName = true;
+            InstanceKeeper.GetAccountMenu().GetType().GetMethod("ShowLoginAccountPanel", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(InstanceKeeper.GetAccountMenu(), null);
+            InstanceKeeper.SetMainClient(this);
+        }
+        public void SetServerIpUsername(string serverIP,string username)
+        {
+            AwaitingServerAndName = false;
+            string ip, name;
+            int port = 6001;
+            if (serverIP.Contains(":"))
+            {
+                string[] split = serverIP.Split(':');
+                ip = split[0];
+                int.TryParse(split[1], out port);
+            }
+            else
+            {
+                ip = serverIP;
+            }
+            name = username;
+            Connect(ip, port, name);
         }
         public void SetOpponentsNames(List<string> namesList)
         {
@@ -64,12 +100,13 @@ namespace ZeroG.MultiplayerClient
                 WriteLog.Error("Error while trying to load game: " + ex.Message + ex.StackTrace);
             }
         }
-        public void Connect()
+        public void Connect(string serverIP, int port, string username)
         {
             WriteLog.Verbose("Attempting to start client");
             gClient = new GameClient();
-            WriteLog.General("Successfully instantiated client");
-            gClient.Start();
+            WriteLog.Verbose("Successfully instantiated client");
+            WriteLog.Verbose("Server IP is " + serverIP + ":" + port.ToString() + " , and connecting with username " + username);
+            gClient.Start(serverIP,port,username);
             WriteLog.Debug("Client started successfully");
             InstanceKeeper.SetGameClient(gClient);
             IsConnected = true;

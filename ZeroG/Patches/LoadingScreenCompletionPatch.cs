@@ -20,7 +20,7 @@ namespace ZeroG.Patches
             {
                 try
                 {
-                    WriteLog.General("Game scene loading completed");
+                    WriteLog.Debug("Game scene loading completed");
                     FieldInfo progressBarInfo = __instance.GetType().GetField("_progressBar", BindingFlags.NonPublic | BindingFlags.Instance);
                     Image progressBar = (Image)progressBarInfo.GetValue(__instance);
                     FieldInfo loadingTextInfo = __instance.GetType().GetField("_loadingLocalize", BindingFlags.NonPublic | BindingFlags.Instance);
